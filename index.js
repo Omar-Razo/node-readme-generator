@@ -1,6 +1,7 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
-const mark = require('./utils/generateMarkdown')
+const { renderLicenseAssets, generateMarkdown } = require('./utils/generateMarkdown')
+const fs = require('fs')
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -53,27 +54,31 @@ const questions = [
         type: "list",
         message: "License that you will be using: ",
         name: "license",
-        choices: ["none", "MIT License", "GNU GPLv3", "Apache License 2.0", "ISC License"]
+        choices: ["none", "MIT", "gpl-3.0", "apache-2.0", "ISC"]
     }
 ];
 
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {
-
-}
+// fs.writeFile('README.md', data, (err) => 
+//     error ? console.error(err) : console.log('README successfully created!')
+// )
 
 // TODO: Create a function to initialize app
 function init() {
     inquirer
         .prompt(questions)
         .then((answers) => {
-            switch(answers.license) {
-                case "none" :
-                    return ""
-                case "MIT License":
-                    return ""
-            }
+            const qAnswers = answers
+            return { license: renderLicenseAssets(qAnswers), answers: qAnswers }
+        })
+        .then(({ license, answers }) => {
+            return generateMarkdown(license, answers)
+        })
+        .then((readmeDoc) => {
+            fs.writeFile('README.md', readmeDoc, (err) => 
+                err ? console.error(err) : console.log('README successfully created!')
+            )
         })
         .catch((error) => {
             if (error.isTtyError) {
