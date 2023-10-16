@@ -36,6 +36,11 @@ const questions = [
     },
     {
         type: "input",
+        message: "Full name (for license): ",
+        name: "fullName"
+    },
+    {
+        type: "input",
         message: "GitHub username: ",
         name: "username"
     },
@@ -43,6 +48,12 @@ const questions = [
         type: "input",
         message: "Email address: ",
         name: "email"
+    },
+    {
+        type: "list",
+        message: "License that you will be using: ",
+        name: "license",
+        choices: ["none", "MIT License", "GNU GPLv3", "Apache License 2.0", "ISC License"]
     }
 ];
 
@@ -56,7 +67,14 @@ function writeToFile(fileName, data) {
 function init() {
     inquirer
         .prompt(questions)
-        .then(answers => console.log("Successful Input!"))
+        .then((answers) => {
+            switch(answers.license) {
+                case "none" :
+                    return ""
+                case "MIT License":
+                    return ""
+            }
+        })
         .catch((error) => {
             if (error.isTtyError) {
                 return "Prompt could not be rendered in the current environment."
@@ -68,11 +86,3 @@ function init() {
 
 // Function call to initialize app
 init();
-
-// name (required)
-
-// sections (checkbox then individual input)
-
-// license (checkbox then functions)
-
-// 
