@@ -1,26 +1,33 @@
-// TODO: Create a function that returns a license badge based on which license is passed in
-// If there is no license, return an empty string
-function renderLicenseBadge(license) {}
+// TODO: Create a function that returns a license badge, section, and link
 
-// TODO: Create a function that returns the license link
 // If there is no license, return an empty string
-function renderLicenseLink(license) {}
+function renderLicenseAssets(answers) {
 
-// TODO: Create a function that returns the license section of README
-// If there is no license, return an empty string
-function renderLicenseSection(license) {
-  return `
-  ## License
-  ${license}
-  `
+  if (answers.license === "none") {
+    const badge = ""
+    const section = ""
+    return badge, section
+  } else {
+    
+    const badge = `[![Generic badge](https://img.shields.io/badge/License-${answers.license}-blue.svg)](https://choosealicense.com/licenses/${answers.license}/)`
+
+    const section = `
+    ## License
+    This project uses the ${answers.license} license. A link to the full license can be found [Here](https://choosealicense.com/licenses/${answers.license}/)`
+
+    return { badge: badge, section: section }
+  }
 }
 
 // TODO: Create a function to generate markdown for README
-function generateMarkdown(data) {
-  return `
-  # ${data.title}
+function generateMarkdown(license, answers) {
 
-  ## ${data.description}
+  const readmeDoc = `
+  ${license.badge}
+
+  # ${answers.title}
+
+  ## ${answers.description}
 
   ## Table of Contents
   1. [Installation](#installation)
@@ -32,23 +39,24 @@ function generateMarkdown(data) {
 
 
   ## Install
-  ${data.installation}
+  ${answers.installation}
 
   ## Usage
-  ${data.usage}
+  ${answers.usage}
 
   ## Contributing
-  ${data.contributing}
+  ${answers.contributing}
 
   ## Test
-  ${data.tests}
+  ${answers.tests}
 
   ## Questions
-  For inquries, reach me at my [GitHub](https://github.com/${data.username}
-  or at my [email](${data.email})
+  For inquries, reach me at my [GitHub](https://github.com/${answers.username}
+  or at my [email](${answers.email})
 
-  
-`;
+  ${license.section}
+`
+  return readmeDoc
 }
 
-module.exports = generateMarkdown;
+module.exports = { renderLicenseAssets, generateMarkdown }
