@@ -54,17 +54,10 @@ const questions = [
         type: "list",
         message: "License that you will be using: ",
         name: "license",
-        choices: ["none", "MIT", "gpl-3.0", "apache-2.0", "ISC"]
+        choices: ["none", "mit", "gpl-3.0", "apache-2.0", "isc"]
     }
 ];
 
-
-// TODO: Create a function to write README file
-// fs.writeFile('README.md', data, (err) => 
-//     error ? console.error(err) : console.log('README successfully created!')
-// )
-
-// TODO: Create a function to initialize app
 function init() {
     inquirer
         .prompt(questions)
