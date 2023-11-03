@@ -10,7 +10,7 @@ function renderLicenseAssets(answers) {
     return { badge: badge , section: section }
   } else {
     if (answers.license.includes('-')) {
-  // modify license input to work with badge spacing format
+  // modifies license input to work with badge spacing format
       const urlLicense = answers.license.replace('-', '--')
 
       badge = `[![Generic badge](https://img.shields.io/badge/License-${urlLicense}-blue)](https://choosealicense.com/licenses/${answers.license}/)`
